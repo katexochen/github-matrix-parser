@@ -6,9 +6,18 @@ const yamlInput = document.getElementById('yaml-input');
 const outputContainer = document.getElementById('output');
 const countSpan = document.getElementById('count');
 const errorMessage = document.getElementById('error-message');
+const checkUnderspecified = document.getElementById('check-underspecified');
+const underspecifiedCountContainer = document.getElementById('underspecified-count-container');
+const underspecifiedCountSpan = document.getElementById('underspecified-count');
+
+let currentCombinations = [];
 
 yamlInput.addEventListener('input', () => {
   processInput();
+});
+
+checkUnderspecified.addEventListener('change', () => {
+    renderOutput(currentCombinations);
 });
 
 // Initial processing
@@ -17,6 +26,7 @@ processInput();
 function processInput() {
   const yaml = yamlInput.value;
   if (!yaml.trim()) {
+    currentCombinations = [];
     renderOutput([]);
     errorMessage.classList.add('hidden');
     yamlInput.classList.remove('border-red-500');
@@ -27,6 +37,7 @@ function processInput() {
   try {
     const parsed = jsyaml.load(yaml);
     if (!parsed) {
+        currentCombinations = [];
         renderOutput([]);
         return;
     }
@@ -39,8 +50,8 @@ function processInput() {
         matrixDef = parsed.strategy.matrix;
     }
 
-    const combinations = generateMatrix(matrixDef);
-    renderOutput(combinations);
+    currentCombinations = generateMatrix(matrixDef);
+    renderOutput(currentCombinations);
     errorMessage.classList.add('hidden');
     yamlInput.classList.remove('border-red-500');
     yamlInput.classList.add('border-gray-300');
@@ -60,6 +71,17 @@ function renderOutput(combinations) {
     countSpan.textContent = combinations.length;
     outputContainer.innerHTML = '';
     
+    // Calculate global key set if we are checking underspecified
+    const allKeys = new Set();
+    const isCheckingUnderspecified = checkUnderspecified.checked;
+    let underspecifiedCount = 0;
+
+    if (isCheckingUnderspecified) {
+        combinations.forEach(combo => {
+            Object.keys(combo).forEach(k => allKeys.add(k));
+        });
+    }
+
     // Light pastel colors for differentiation
     const bgColors = [
         'bg-blue-50', 'bg-green-50', 'bg-purple-50', 'bg-yellow-50', 
@@ -71,9 +93,35 @@ function renderOutput(combinations) {
         const div = document.createElement('div');
         div.className = 'border border-[#d0d7de] rounded-md bg-white shadow-sm overflow-hidden hover:border-[#0969da] transition-colors';
         
+        let isUnderspecified = false;
+        if (isCheckingUnderspecified) {
+            const comboKeys = Object.keys(combo);
+            // Check if combo is missing any key that exists in the global set
+            if (comboKeys.length < allKeys.size) {
+                 isUnderspecified = true;
+            }
+        }
+
+        if (isUnderspecified) {
+            div.classList.remove('border-[#d0d7de]');
+            div.classList.add('border-red-500', 'border-2');
+            underspecifiedCount++;
+        }
+
         const header = document.createElement('div');
         header.className = 'bg-[#f6f8fa] px-3 py-2 border-b border-[#d0d7de] flex justify-between items-center';
-        header.innerHTML = `<span class="text-xs font-semibold text-[#24292f]">Job ${index + 1}</span>`;
+        
+        let statusBadge = '';
+        if (isUnderspecified) {
+            statusBadge = '<span class="ml-2 text-[10px] font-bold text-red-600 uppercase border border-red-200 bg-red-50 px-1.5 py-0.5 rounded">Underspecified</span>';
+        }
+
+        header.innerHTML = `
+            <div class="flex items-center">
+                <span class="text-xs font-semibold text-[#24292f]">Job ${index + 1}</span>
+                ${statusBadge}
+            </div>
+        `;
         div.appendChild(header);
 
         const body = document.createElement('div');
@@ -110,6 +158,13 @@ function renderOutput(combinations) {
         div.appendChild(body);
         outputContainer.appendChild(div);
     });
+
+    if (isCheckingUnderspecified) {
+        underspecifiedCountContainer.classList.remove('hidden');
+        underspecifiedCountSpan.textContent = underspecifiedCount;
+    } else {
+        underspecifiedCountContainer.classList.add('hidden');
+    }
 }
 
 function stringHash(str) {

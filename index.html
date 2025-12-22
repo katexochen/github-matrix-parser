@@ -47,10 +47,15 @@
 
     <!-- Output Section -->
     <div class="w-full md:w-1/2 flex flex-col h-full overflow-hidden">
-      <div class="mb-2 flex justify-between items-center">
-        <h2 class="text-sm font-semibold">Generated Jobs <span id="count"
-            class="ml-1 inline-flex items-center justify-center bg-[#afb8c133] text-xs font-medium px-2 py-0.5 rounded-full">0</span>
-        </h2>
+      <div class="mb-2 flex justify-between items-center pr-1 h-[21px]">
+          <h2 class="text-sm font-semibold">Generated Jobs <span id="count" class="ml-1 inline-flex items-center justify-center bg-[#afb8c133] text-xs font-medium px-2 py-0.5 rounded-full">0</span></h2>
+          <div class="flex items-center gap-2">
+              <input type="checkbox" id="check-underspecified" checked class="rounded border-gray-300 text-[#0969da] focus:ring-[#0969da] cursor-pointer">
+              <label for="check-underspecified" class="text-xs text-[#57606a] cursor-pointer select-none">Check underspecified</label>
+              <span id="underspecified-count-container" class="hidden">
+                  <span id="underspecified-count" class="ml-1 inline-flex items-center justify-center bg-red-100 text-red-600 text-xs font-medium px-2 py-0.5 rounded-full">0</span>
+              </span>
+          </div>
       </div>
       <div class="flex-1 overflow-auto pr-1">
         <div id="output" class="space-y-3">
