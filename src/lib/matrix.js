@@ -8,7 +8,7 @@ export function extractMatrices(parsed) {
         for (const [jobId, job] of Object.entries(parsed.jobs)) {
             if (job && job.strategy && job.strategy.matrix) {
                 results.push({
-                    name: job.name || jobId,
+                    name: jobId,
                     matrix: job.strategy.matrix
                 });
             }
@@ -31,7 +31,7 @@ export function extractMatrices(parsed) {
         for (const [jobId, job] of Object.entries(parsed)) {
             if (job && job.strategy && job.strategy.matrix) {
                 results.push({
-                    name: job.name || jobId,
+                    name: jobId,
                     matrix: job.strategy.matrix
                 });
             }
@@ -51,11 +51,20 @@ export function extractMatrices(parsed) {
 
     // 5. Assume it's a raw matrix
     // If it looks like a matrix (values are arrays), treat as one.
-    // If valid matrix (generateMatrix returns something), return it.
-    // We assume it's a single matrix if we reached here.
     return [{ name: 'Job', matrix: parsed }];
 }
 
+/**
+ * Generates all matrix combinations based on dimensions, includes, and excludes.
+ * 
+ * Logic:
+ * 1. Calculate Cartesian product of dimensions.
+ * 2. Filter out excludes.
+ * 3. Process includes:
+ *    - Includes match against the *original* dimension keys of the matrix.
+ *    - If an include matches existing jobs, it updates them (merges properties).
+ *    - If an include does not match any existing job (based on dimensions), it is added as a new job.
+ */
 export function generateMatrix(matrix) {
     if (!matrix || typeof matrix !== 'object') return [];
 
@@ -91,13 +100,6 @@ export function generateMatrix(matrix) {
     }
 
     // Apply includes
-    // "All include entries are processed against the original matrix combinations."
-    // Original combinations are modified in place if matched.
-    // If NO match found in original combinations, the include is added as a NEW combination.
-    // New combinations added by includes are NOT candidates for subsequent includes.
-    
-    // We keep 'combinations' as the list of original (mutable) jobs.
-    // We'll collect new jobs in 'extraCombinations'.
     const extraCombinations = [];
 
     for (const item of include) {

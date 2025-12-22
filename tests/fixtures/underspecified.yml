@@ -1,0 +1,6 @@
+matrix:
+  os: [linux, windows]
+  include:
+    - os: linux
+      arch: x64
+    - os: windows
