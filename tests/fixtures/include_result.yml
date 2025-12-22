@@ -1,0 +1,17 @@
+- fruit: apple
+  animal: cat
+  color: pink
+  shape: circle
+- fruit: apple
+  animal: dog
+  color: green
+  shape: circle
+- fruit: pear
+  animal: cat
+  color: pink
+- fruit: pear
+  animal: dog
+  color: green
+- fruit: banana
+- fruit: banana
+  animal: cat

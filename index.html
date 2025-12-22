@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>GitHub Matrix Parser</title>
+  </head>
+  <body class="bg-gray-100 h-screen flex flex-col">
+    <header class="bg-gray-800 text-white p-4 shadow-md">
+      <h1 class="text-xl font-bold">GitHub Actions Matrix Calculator</h1>
+      <p class="text-sm text-gray-400">Paste your strategy matrix YAML to see the generated combinations.</p>
+    </header>
+
+    <main class="flex-1 flex overflow-hidden">
+      <!-- Input Section -->
+      <div class="w-1/2 p-4 flex flex-col border-r border-gray-300">
+        <label for="yaml-input" class="block mb-2 text-sm font-medium text-gray-700">Matrix YAML</label>
+        <textarea
+          id="yaml-input"
+          class="flex-1 p-4 font-mono text-sm bg-white border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none resize-none"
+          placeholder="matrix:
+  os: [ubuntu-latest, windows-latest]
+  version: [10, 12, 14]
+  include:
+    - os: ubuntu-latest
+      version: 16
+  exclude:
+    - os: windows-latest
+      version: 10"
+        ></textarea>
+        <div id="error-message" class="mt-2 text-red-600 text-sm hidden"></div>
+      </div>
+
+      <!-- Output Section -->
+      <div class="w-1/2 p-4 flex flex-col bg-gray-50 overflow-auto">
+        <div class="flex justify-between items-center mb-2">
+            <h2 class="text-sm font-medium text-gray-700">Generated Combinations (<span id="count">0</span>)</h2>
+        </div>
+        <div id="output" class="flex-1 space-y-2">
+          <!-- Results will be injected here -->
+        </div>
+      </div>
+    </main>
+
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>
