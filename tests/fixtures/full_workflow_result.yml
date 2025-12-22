@@ -1,0 +1,6 @@
+backend:
+  - node: 14
+  - node: 16
+frontend:
+  - browser: chrome
+  - browser: firefox

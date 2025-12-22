@@ -1,3 +1,61 @@
+export function extractMatrices(parsed) {
+    if (!parsed || typeof parsed !== 'object') return [];
+
+    const results = [];
+
+    // 1. Check for 'jobs' key (Full workflow)
+    if (parsed.jobs && typeof parsed.jobs === 'object') {
+        for (const [jobId, job] of Object.entries(parsed.jobs)) {
+            if (job && job.strategy && job.strategy.matrix) {
+                results.push({
+                    name: job.name || jobId,
+                    matrix: job.strategy.matrix
+                });
+            }
+        }
+        if (results.length > 0) return results;
+    }
+
+    // 2. Check if it's a dict of jobs (heuristic: values are objects with strategy)
+    // Avoid false positives if it's just a matrix with object values.
+    // A matrix usually has array values. A job dict has object values.
+    const keys = Object.keys(parsed);
+    const isJobDict = keys.length > 0 && keys.every(k => {
+        const val = parsed[k];
+        // Must be object, not array. And usually has 'runs-on', 'steps', or 'strategy'.
+        // If it has 'strategy', likely a job.
+        return val && typeof val === 'object' && !Array.isArray(val) && (val.strategy || val.steps || val['runs-on']);
+    });
+
+    if (isJobDict) {
+        for (const [jobId, job] of Object.entries(parsed)) {
+            if (job && job.strategy && job.strategy.matrix) {
+                results.push({
+                    name: job.name || jobId,
+                    matrix: job.strategy.matrix
+                });
+            }
+        }
+        if (results.length > 0) return results;
+    }
+
+    // 3. Check for 'strategy' key
+    if (parsed.strategy && parsed.strategy.matrix) {
+        return [{ name: 'Job', matrix: parsed.strategy.matrix }];
+    }
+
+    // 4. Check for 'matrix' key
+    if (parsed.matrix) {
+        return [{ name: 'Job', matrix: parsed.matrix }];
+    }
+
+    // 5. Assume it's a raw matrix
+    // If it looks like a matrix (values are arrays), treat as one.
+    // If valid matrix (generateMatrix returns something), return it.
+    // We assume it's a single matrix if we reached here.
+    return [{ name: 'Job', matrix: parsed }];
+}
+
 export function generateMatrix(matrix) {
     if (!matrix || typeof matrix !== 'object') return [];
 
