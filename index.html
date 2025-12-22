@@ -1,24 +1,37 @@
 <!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>GitHub Matrix Parser</title>
-  </head>
-  <body class="bg-gray-100 h-screen flex flex-col">
-    <header class="bg-gray-800 text-white p-4 shadow-md">
-      <h1 class="text-xl font-bold">GitHub Actions Matrix Calculator</h1>
-      <p class="text-sm text-gray-400">Paste your strategy matrix YAML to see the generated combinations.</p>
-    </header>
+<html lang="en" class="h-full">
 
-    <main class="flex-1 flex overflow-hidden">
-      <!-- Input Section -->
-      <div class="w-1/2 p-4 flex flex-col border-r border-gray-300">
-        <label for="yaml-input" class="block mb-2 text-sm font-medium text-gray-700">Matrix YAML</label>
-        <textarea
-          id="yaml-input"
-          class="flex-1 p-4 font-mono text-sm bg-white border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none resize-none"
-          placeholder="matrix:
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>GitHub Actions Matrix Parser</title>
+  <link rel="icon" type="image/svg+xml"
+    href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%2324292f'><path d='M8 0c4.42 0 8 3.58 8 8a8.013 8.013 0 0 1-5.45 7.59c-.4.08-.55-.17-.55-.38 0-.27.01-1.13.01-2.2 0-.75-.25-1.23-.54-1.48 1.78-.2 3.65-.88 3.65-3.95 0-.88-.31-1.59-.82-2.15.08-.2.36-1.02-.08-2.12 0 0-.67-.22-2.2.82-.64-.18-1.32-.27-2-.27-.68 0-1.36.09-2 .27-1.53-1.03-2.2-.82-2.2-.82-.44 1.1-.16 1.92-.08 2.12-.51.56-.82 1.28-.82 2.15 0 3.06 1.86 3.75 3.64 3.95-.23.2-.44.55-.51 1.07-.46.21-1.61.55-2.33-.66-.15-.24-.6-.83-1.23-.82-.67.01-.27.38.01.53.34.19.73.9.82 1.13.16.45.68 1.31 2.69.94 0 .67.01 1.3.01 1.49 0 .21-.15.45-.55.38A7.995 7.995 0 0 1 0 8c0-4.42 3.58-8 8-8Z'></path></svg>" />
+</head>
+
+<body class="bg-[#f6f8fa] h-full flex flex-col font-sans text-[#24292f]">
+  <header class="bg-white border-b border-[#d0d7de] py-4 px-6 shadow-sm">
+    <div class="max-w-7xl mx-auto flex items-center gap-3">
+      <div>
+        <h1 class="text-lg font-semibold leading-tight text-[#24292f]">GitHub Actions Matrix Parser</h1>
+        <p class="text-xs text-[#57606a]">Visualize GitHub Actions matrix combinations</p>
+      </div>
+    </div>
+  </header>
+
+  <main class="flex-1 max-w-7xl mx-auto w-full p-6 flex flex-col md:flex-row gap-6 overflow-hidden">
+    <!-- Input Section -->
+    <div class="w-full md:w-1/2 flex flex-col h-full">
+      <div class="mb-2 flex justify-between items-baseline">
+        <label for="yaml-input" class="text-sm font-semibold">Workflow Matrix YAML</label>
+      </div>
+      <div class="flex-1 flex flex-col border border-[#d0d7de] rounded-md overflow-hidden bg-white shadow-sm">
+        <div class="bg-[#f6f8fa] px-3 py-2 border-b border-[#d0d7de] text-xs font-mono text-gray-600">
+          matrix.yml
+        </div>
+        <textarea id="yaml-input"
+          class="flex-1 p-4 font-mono text-xs md:text-sm bg-white outline-none resize-none leading-relaxed"
+          spellcheck="false" placeholder="Paste your workflow matrix here...">matrix:
   os: [ubuntu-latest, windows-latest]
   version: [10, 12, 14]
   include:
@@ -26,22 +39,37 @@
       version: 16
   exclude:
     - os: windows-latest
-      version: 10"
-        ></textarea>
-        <div id="error-message" class="mt-2 text-red-600 text-sm hidden"></div>
+      version: 10</textarea>
       </div>
+      <div id="error-message" class="mt-2 p-3 bg-red-50 border border-red-200 text-red-600 text-sm rounded-md hidden">
+      </div>
+    </div>
 
-      <!-- Output Section -->
-      <div class="w-1/2 p-4 flex flex-col bg-gray-50 overflow-auto">
-        <div class="flex justify-between items-center mb-2">
-            <h2 class="text-sm font-medium text-gray-700">Generated Combinations (<span id="count">0</span>)</h2>
-        </div>
-        <div id="output" class="flex-1 space-y-2">
+    <!-- Output Section -->
+    <div class="w-full md:w-1/2 flex flex-col h-full overflow-hidden">
+      <div class="mb-2 flex justify-between items-center">
+        <h2 class="text-sm font-semibold">Generated Jobs <span id="count"
+            class="ml-1 inline-flex items-center justify-center bg-[#afb8c133] text-xs font-medium px-2 py-0.5 rounded-full">0</span>
+        </h2>
+      </div>
+      <div class="flex-1 overflow-auto pr-1">
+        <div id="output" class="space-y-3">
           <!-- Results will be injected here -->
         </div>
       </div>
-    </main>
+    </div>
+  </main>
 
-    <script type="module" src="/src/main.js"></script>
-  </body>
+  <footer class="mt-auto py-6 border-t border-[#d0d7de] bg-white">
+    <div class="max-w-7xl mx-auto px-6 flex justify-center items-center text-xs text-gray-500 gap-4">
+      <span>&copy; 2025 Paul Meyer</span>
+      <span>&bull;</span>
+      <a href="https://github.com/katexochen/github-matrix-parser" class="hover:text-[#0969da] hover:underline"
+        target="_blank" rel="noopener noreferrer">View on GitHub</a>
+    </div>
+  </footer>
+
+  <script type="module" src="/src/main.js"></script>
+</body>
+
 </html>

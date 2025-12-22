@@ -60,32 +60,63 @@ function renderOutput(combinations) {
     countSpan.textContent = combinations.length;
     outputContainer.innerHTML = '';
     
+    // Light pastel colors for differentiation
+    const bgColors = [
+        'bg-blue-50', 'bg-green-50', 'bg-purple-50', 'bg-yellow-50', 
+        'bg-pink-50', 'bg-indigo-50', 'bg-red-50', 'bg-orange-50',
+        'bg-teal-50', 'bg-cyan-50', 'bg-lime-50', 'bg-emerald-50'
+    ];
+    
     combinations.forEach((combo, index) => {
         const div = document.createElement('div');
-        div.className = 'p-3 bg-white border border-gray-200 rounded shadow-sm hover:shadow-md transition-shadow';
+        div.className = 'border border-[#d0d7de] rounded-md bg-white shadow-sm overflow-hidden hover:border-[#0969da] transition-colors';
+        
+        const header = document.createElement('div');
+        header.className = 'bg-[#f6f8fa] px-3 py-2 border-b border-[#d0d7de] flex justify-between items-center';
+        header.innerHTML = `<span class="text-xs font-semibold text-[#24292f]">Job ${index + 1}</span>`;
+        div.appendChild(header);
+
+        const body = document.createElement('div');
         
         const entries = Object.entries(combo);
         if (entries.length === 0) {
-            div.textContent = `Job ${index + 1}: (Empty environment)`;
+             body.className = 'p-3';
+             body.innerHTML = '<span class="text-xs text-gray-500 italic">Empty environment</span>';
         } else {
-            // Header
-            const title = document.createElement('div');
-            title.className = 'font-semibold text-gray-800 mb-1';
-            title.textContent = `Job ${index + 1}`;
-            div.appendChild(title);
-            
-            // Key-values
-            const list = document.createElement('ul');
-            list.className = 'text-sm space-y-1';
+            body.className = 'text-xs';
             
             entries.forEach(([k, v]) => {
-                const li = document.createElement('li');
-                li.innerHTML = `<span class="text-blue-600 font-mono">${k}:</span> <span class="text-gray-900">${v}</span>`;
-                list.appendChild(li);
+                const row = document.createElement('div');
+                // Color selection based on hash of the key
+                const colorIndex = Math.abs(stringHash(k)) % bgColors.length;
+                const bgColor = bgColors[colorIndex];
+                
+                row.className = `flex items-baseline px-3 py-2 border-b border-gray-100 last:border-0 ${bgColor}`;
+                
+                // Value formatting
+                let displayValue = v;
+                if (typeof v === 'object' && v !== null) {
+                    displayValue = JSON.stringify(v);
+                }
+                
+                row.innerHTML = `
+                    <span class="font-mono text-[#0969da] w-24 shrink-0 truncate mr-2 text-right" title="${k}">${k}</span>
+                    <span class="font-mono text-[#24292f] break-all">${displayValue}</span>
+                `;
+                body.appendChild(row);
             });
-            div.appendChild(list);
         }
         
+        div.appendChild(body);
         outputContainer.appendChild(div);
     });
+}
+
+function stringHash(str) {
+    let hash = 0;
+    for (let i = 0; i < str.length; i++) {
+        hash = ((hash << 5) - hash) + str.charCodeAt(i);
+        hash |= 0;
+    }
+    return hash;
 }
