@@ -1,0 +1,43 @@
+matrix:
+  debug-shell: [true, false]
+  platform:
+    - name: Metal-QEMU-SNP
+      runner: SNP
+      self-hosted: true
+    - name: Metal-QEMU-TDX
+      runner: TDX
+      self-hosted: true
+    - name: Metal-QEMU-SNP-GPU
+      runner: SNP-GPU
+      self-hosted: true
+    - name: Metal-QEMU-TDX-GPU
+      runner: TDX-GPU
+      self-hosted: true
+  test-name:
+    - atls
+    - containerd-11644-reproducer
+    - genpolicy-unsupported
+    - gpu
+    - imagepuller-auth
+    - imagestore
+    - memdump
+    - openssl
+    - peerrecovery
+    - policy
+    - proxy
+    - regression
+    - servicemesh
+    - vault
+    - volumestatefulset
+    - workloadsecret
+  exclude:
+    - platform:
+        name: Metal-QEMU-SNP
+        runner: SNP
+        self-hosted: true
+      test-name: gpu
+    - platform:
+        name: Metal-QEMU-TDX
+        runner: TDX
+        self-hosted: true
+      test-name: gpu

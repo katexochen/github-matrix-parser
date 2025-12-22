@@ -91,7 +91,7 @@ function cartesianProduct(dimensions) {
 function isExcludeMatch(candidate, rule) {
     // For exclude: All keys in rule must exist in candidate and have equal values
     for (const key in rule) {
-        if (candidate[key] === undefined || candidate[key] !== rule[key]) {
+        if (candidate[key] === undefined || !isEqual(candidate[key], rule[key])) {
             return false;
         }
     }
@@ -108,10 +108,27 @@ function isIncludeMatch(candidate, rule, dimensionKeys) {
     for (const key of dimensionKeys) {
         // If the rule has this dimension key, it must match the candidate
         if (Object.prototype.hasOwnProperty.call(rule, key)) {
-            if (candidate[key] !== rule[key]) {
+            if (!isEqual(candidate[key], rule[key])) {
                 return false;
             }
         }
+    }
+    
+    return true;
+}
+
+function isEqual(a, b) {
+    if (a === b) return true;
+    if (typeof a !== 'object' || a === null || typeof b !== 'object' || b === null) return false;
+    
+    const keysA = Object.keys(a);
+    const keysB = Object.keys(b);
+    
+    if (keysA.length !== keysB.length) return false;
+    
+    for (const key of keysA) {
+        if (!keysB.includes(key)) return false;
+        if (!isEqual(a[key], b[key])) return false;
     }
     
     return true;
