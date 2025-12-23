@@ -149,9 +149,9 @@ function cartesianProduct(dimensions) {
 }
 
 function isExcludeMatch(candidate, rule) {
-    // For exclude: All keys in rule must exist in candidate and have equal values
+    // For exclude: All keys in rule must exist in candidate and have equal values (subset match for objects)
     for (const key in rule) {
-        if (candidate[key] === undefined || !isEqual(candidate[key], rule[key])) {
+        if (candidate[key] === undefined || !isSubset(candidate[key], rule[key])) {
             return false;
         }
     }
@@ -168,7 +168,7 @@ function isIncludeMatch(candidate, rule, dimensionKeys) {
     for (const key of dimensionKeys) {
         // If the rule has this dimension key, it must match the candidate
         if (Object.prototype.hasOwnProperty.call(rule, key)) {
-            if (!isEqual(candidate[key], rule[key])) {
+            if (!isSubset(candidate[key], rule[key])) {
                 return false;
             }
         }
@@ -177,18 +177,24 @@ function isIncludeMatch(candidate, rule, dimensionKeys) {
     return true;
 }
 
-function isEqual(a, b) {
-    if (a === b) return true;
-    if (typeof a !== 'object' || a === null || typeof b !== 'object' || b === null) return false;
+function isSubset(candidate, rule) {
+    if (candidate === rule) return true;
+    if (typeof candidate !== 'object' || candidate === null || typeof rule !== 'object' || rule === null) return false;
     
-    const keysA = Object.keys(a);
-    const keysB = Object.keys(b);
+    if (Array.isArray(rule)) {
+         if (!Array.isArray(candidate)) return false;
+         if (candidate.length !== rule.length) return false;
+         for (let i = 0; i < rule.length; i++) {
+             if (!isSubset(candidate[i], rule[i])) return false;
+         }
+         return true;
+    }
     
-    if (keysA.length !== keysB.length) return false;
-    
-    for (const key of keysA) {
-        if (!keysB.includes(key)) return false;
-        if (!isEqual(a[key], b[key])) return false;
+    if (Array.isArray(candidate)) return false;
+
+    for (const key of Object.keys(rule)) {
+        if (!Object.prototype.hasOwnProperty.call(candidate, key)) return false;
+        if (!isSubset(candidate[key], rule[key])) return false;
     }
     
     return true;

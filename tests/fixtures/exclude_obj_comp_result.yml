@@ -1,0 +1,51 @@
+matrix:
+  - debug-shell: false
+    platform:
+      name: a
+      runner: ubuntu-latest
+    test-name: bar
+  - debug-shell: false
+    platform:
+      name: a
+      runner: ubuntu-latest
+    test-name: baz
+  - debug-shell: false
+    platform:
+      name: a
+      runner: ubuntu-latest
+    test-name: foo
+  - debug-shell: false
+    platform:
+      name: b
+      runner: ubuntu-latest
+    test-name: bar
+  - debug-shell: false
+    platform:
+      name: b
+      runner: ubuntu-latest
+    test-name: foo
+  - debug-shell: true
+    platform:
+      name: a
+      runner: ubuntu-latest
+    test-name: bar
+  - debug-shell: true
+    platform:
+      name: a
+      runner: ubuntu-latest
+    test-name: baz
+  - debug-shell: true
+    platform:
+      name: a
+      runner: ubuntu-latest
+    test-name: foo
+  - debug-shell: true
+    platform:
+      name: b
+      runner: ubuntu-latest
+    test-name: bar
+  - debug-shell: true
+    platform:
+      name: b
+      runner: ubuntu-latest
+    test-name: foo

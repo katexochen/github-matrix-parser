@@ -1,0 +1,13 @@
+name: Include Object Subset
+jobs:
+  include-subset:
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest]
+        config: 
+          - { name: basic, debug: false }
+          - { name: advanced, debug: true }
+        include:
+          - config:
+              name: advanced
+            os: windows-latest

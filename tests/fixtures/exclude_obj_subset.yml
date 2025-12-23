@@ -1,0 +1,15 @@
+name: Exclude Object Subset Nested
+jobs:
+  exclude-subset-nested:
+    strategy:
+      matrix:
+        env: [prod, dev]
+        settings:
+          - db: { type: postgres, version: 14 }
+            cache: redis
+          - db: { type: mysql, version: 8 }
+            cache: memcached
+        exclude:
+          - settings:
+              db:
+                type: mysql

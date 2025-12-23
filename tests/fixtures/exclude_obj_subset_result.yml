@@ -1,0 +1,13 @@
+exclude-subset-nested:
+  - env: dev
+    settings:
+      db:
+        type: postgres
+        version: 14
+      cache: redis
+  - env: prod
+    settings:
+      db:
+        type: postgres
+        version: 14
+      cache: redis

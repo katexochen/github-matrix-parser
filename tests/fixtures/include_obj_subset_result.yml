@@ -1,0 +1,20 @@
+include-subset:
+  - config:
+      name: advanced
+      debug: true
+    os: macos-latest
+  - config:
+      name: advanced
+      debug: true
+    os: ubuntu-latest
+  - config:
+      name: advanced
+    os: windows-latest
+  - config:
+      name: basic
+      debug: false
+    os: macos-latest
+  - config:
+      name: basic
+      debug: false
+    os: ubuntu-latest

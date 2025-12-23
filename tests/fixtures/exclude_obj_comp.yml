@@ -1,0 +1,28 @@
+name: Matrix Runner
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  matrix:
+    strategy:
+      matrix:
+        debug-shell: [true, false]
+        platform:
+          - name: a
+            runner: ubuntu-latest
+          - name: b
+            runner: ubuntu-latest
+        test-name: [foo, bar, baz]
+        exclude:
+          - platform:
+              name: b
+            test-name: baz
+
+    uses: ./.github/workflows/test.yaml
+    with:
+      platform-name: ${{ matrix.platform.name }}
+      runner: ${{ matrix.platform.runner }}
+      test-name: ${{ matrix.test-name }}
+      debug-shell: ${{ matrix.debug-shell }}
