@@ -7,7 +7,7 @@ import { generateMatrix, extractMatrices } from './src/lib/matrix.js';
 const args = process.argv.slice(2);
 
 function printUsage() {
-    console.log(`Usage: github-matrix-parser [options] <file>
+    console.log(`Usage: github-matrix-parser [options] <file>...
 
 Options:
   --output=yaml|json    Output format (default: yaml)
@@ -22,8 +22,7 @@ if (args.includes('--help')) {
     process.exit(0);
 }
 
-// Parse arguments
-let filePath = null;
+const filePaths = [];
 let outputFormat = 'yaml';
 let checkMode = false;
 let allowUnderspecified = false;
@@ -40,7 +39,7 @@ for (const arg of args) {
     } else if (arg === '--allow-underspecified') {
         allowUnderspecified = true;
     } else if (!arg.startsWith('-')) {
-        filePath = arg;
+        filePaths.push(arg);
     } else {
         console.error(`Error: Unknown argument '${arg}'`);
         printUsage();
@@ -48,112 +47,158 @@ for (const arg of args) {
     }
 }
 
-if (!filePath) {
+if (filePaths.length === 0) {
     console.error('Error: No input file specified.');
     printUsage();
     process.exit(1);
 }
 
-// Read input
-let inputContent;
-try {
-    inputContent = fs.readFileSync(filePath, 'utf8');
-} catch (e) {
-    console.error(`Error reading file: ${e.message}`);
-    process.exit(1);
+function findLineNumber(content, jobName) {
+    const lines = content.split('\n');
+    if (jobName === 'Job') {
+        // Try to find 'matrix:' key, assuming it's a matrix definition inside strategy or top level
+        for (let i = 0; i < lines.length; i++) {
+             if (lines[i].includes('matrix:')) return i + 1;
+        }
+        return 1;
+    }
+    
+    // Search for "jobName:" or "  jobName:"
+    const escapedName = jobName.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    const regex = new RegExp(`^\\s*${escapedName}:`);
+    for (let i = 0; i < lines.length; i++) {
+        if (regex.test(lines[i])) return i + 1;
+    }
+    return 1;
 }
 
-// Parse YAML
-let parsedInput;
-try {
-    parsedInput = jsyaml.load(inputContent);
-} catch (e) {
-    console.error(`Error parsing YAML: ${e.message}`);
-    process.exit(1);
-}
+let exitCode = 0;
+const allResults = {};
 
-if (!parsedInput || typeof parsedInput !== 'object') {
-    console.error('Error: Invalid input format.');
-    process.exit(1);
-}
-
-// Extract and Generate
-let jobResults = [];
-try {
-    const matrixDefs = extractMatrices(parsedInput);
-    if (matrixDefs.length === 0) {
-        console.error('Error: No matrix definitions found in input.');
-        process.exit(1);
+for (const filePath of filePaths) {
+    let inputContent;
+    try {
+        inputContent = fs.readFileSync(filePath, 'utf8');
+    } catch (e) {
+        console.error(`Error reading file ${filePath}: ${e.message}`);
+        exitCode = 1;
+        continue;
     }
 
-    jobResults = matrixDefs.map(def => ({
-        name: def.name,
-        combinations: generateMatrix(def.matrix)
-    }));
-} catch (e) {
-    console.error(`Error generating matrix: ${e.message}`);
-    process.exit(1);
-}
+    let parsedInput;
+    try {
+        parsedInput = jsyaml.load(inputContent);
+    } catch (e) {
+        console.error(`Error parsing YAML in ${filePath}: ${e.message}`);
+        exitCode = 1;
+        continue;
+    }
+    
+    if (!parsedInput || typeof parsedInput !== 'object') {
+        console.error(`Error: Invalid input format in ${filePath}.`);
+        exitCode = 1;
+        continue;
+    }
+    
+    let jobResults = [];
+    try {
+        const matrixDefs = extractMatrices(parsedInput);
+        if (matrixDefs.length === 0) {
+            console.error(`Error: No matrix definitions found in ${filePath}.`);
+            exitCode = 1;
+            continue;
+        }
 
-// Check for underspecified jobs
-let hasUnderspecified = false;
-const errors = [];
-
-for (const job of jobResults) {
-    const allKeys = new Set();
-    job.combinations.forEach(combo => {
-        Object.keys(combo).forEach(k => allKeys.add(k));
-    });
-
-    let jobUnderspecifiedCount = 0;
-    for (const combo of job.combinations) {
-        if (Object.keys(combo).length < allKeys.size) {
-            jobUnderspecifiedCount++;
+        jobResults = matrixDefs.map(def => ({
+            name: def.name,
+            combinations: generateMatrix(def.matrix),
+            line: findLineNumber(inputContent, def.name)
+        }));
+    } catch (e) {
+        console.error(`Error generating matrix in ${filePath}: ${e.message}`);
+        exitCode = 1;
+        continue;
+    }
+    
+    // Check for underspecified
+    for (const job of jobResults) {
+        const allKeys = new Set();
+        job.combinations.forEach(combo => {
+            Object.keys(combo).forEach(k => allKeys.add(k));
+        });
+        
+        const underspecified = [];
+        job.combinations.forEach((combo, idx) => {
+             const missing = [];
+             for (const k of allKeys) {
+                 if (!Object.prototype.hasOwnProperty.call(combo, k)) {
+                     missing.push(k);
+                 }
+             }
+             if (missing.length > 0) {
+                 underspecified.push({ combo, missing, index: idx });
+             }
+        });
+        
+        if (underspecified.length > 0) {
+            if (checkMode && !allowUnderspecified) {
+                 underspecified.forEach(u => {
+                     const jobDesc = job.name === 'Job' ? 'matrix' : `job '${job.name}'`;
+                     console.error(`${filePath}:${job.line}: Error: ${jobDesc} has underspecified combinations.`);
+                     console.error(`  Missing keys: ${u.missing.join(', ')}`);
+                     console.error(`  Combination: ${JSON.stringify(u.combo)}`);
+                 });
+                 exitCode = 1;
+            }
         }
     }
-
-    if (jobUnderspecifiedCount > 0) {
-        hasUnderspecified = true;
-        if (checkMode && !allowUnderspecified) {
-            errors.push(`Error: Job '${job.name}' has ${jobUnderspecifiedCount} underspecified combinations.`);
-        }
+    
+    if (!checkMode) {
+        allResults[filePath] = jobResults;
     }
 }
 
 if (checkMode) {
-    if (errors.length > 0) {
-        errors.forEach(e => console.error(e));
-        process.exit(1);
+    if (exitCode === 0) {
+        console.log('Matrix definitions are valid.');
     }
-    
-    if (hasUnderspecified && !allowUnderspecified) {
-        process.exit(1); // Should be handled above, but safety check
-    }
-    console.log('Matrix definition is valid.');
-    process.exit(0);
+    process.exit(exitCode);
 }
 
-// Output
+// Output logic for non-check mode
 if (outputFormat === 'json') {
-    // If single result and name is generic 'Job' (extracted from raw matrix),
-    // output the array directly for backward compatibility and simplicity.
-    if (jobResults.length === 1 && jobResults[0].name === 'Job') {
-        const outputObj = { 'Job': jobResults[0].combinations };
-        console.log(JSON.stringify(outputObj, null, 2));
-    } else {
-        const outputObj = {};
-        jobResults.forEach(j => { outputObj[j.name] = j.combinations; });
-        console.log(JSON.stringify(outputObj, null, 2));
+    const finalOutput = {};
+    for (const [fPath, jobs] of Object.entries(allResults)) {
+         const jobObj = {};
+         jobs.forEach(j => { jobObj[j.name] = j.combinations; });
+         
+         // Backward compatibility for single file and generic Job name
+         if (Object.keys(allResults).length === 1 && jobs.length === 1 && jobs[0].name === 'Job') {
+             console.log(JSON.stringify(jobs[0].combinations, null, 2));
+             process.exit(exitCode);
+         }
+         finalOutput[fPath] = jobObj;
     }
+    console.log(JSON.stringify(finalOutput, null, 2));
 } else {
-    // YAML output
-    // If multiple jobs, output a dictionary keyed by job name.
-    // If single job with generic name 'Job', output the list directly.
-    if (jobResults.length === 1 && jobResults[0].name === 'Job') {
-        console.log(jsyaml.dump(jobResults[0].combinations));
+    // YAML
+    if (Object.keys(allResults).length === 1) {
+        const jobs = Object.values(allResults)[0];
+        if (jobs.length === 1 && jobs[0].name === 'Job') {
+            console.log(jsyaml.dump(jobs[0].combinations));
+        } else {
+            const outputObj = {};
+            jobs.forEach(j => { outputObj[j.name] = j.combinations; });
+            console.log(jsyaml.dump(outputObj));
+        }
     } else {
-        const outputObj = {};
-        jobResults.forEach(j => { outputObj[j.name] = j.combinations; });
-        console.log(jsyaml.dump(outputObj));
+        const finalOutput = {};
+        for (const [fPath, jobs] of Object.entries(allResults)) {
+             const jobObj = {};
+             jobs.forEach(j => { jobObj[j.name] = j.combinations; });
+             finalOutput[fPath] = jobObj;
+        }
+        console.log(jsyaml.dump(finalOutput));
     }
 }
+process.exit(exitCode);
