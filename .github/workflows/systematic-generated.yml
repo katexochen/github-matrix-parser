@@ -1,0 +1,21 @@
+name: Systematic Matrix Tests
+'on':
+  push:
+    branches:
+      - systematic-tests-run
+  workflow_dispatch: {}
+jobs:
+  complex:
+    name: 'complex: ${{ toJSON(matrix) }}'
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        os:
+          - ubuntu-latest
+          - ubuntu-22.04
+        version:
+          - 10
+          - 12
+      fail-fast: false
+    steps:
+      - run: echo "Job ran"
