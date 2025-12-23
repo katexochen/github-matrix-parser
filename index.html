@@ -24,7 +24,8 @@
     </div>
   </header>
 
-  <main class="flex-1 max-w-7xl mx-auto w-full p-6 flex flex-col md:flex-row gap-6 overflow-hidden">
+  <main class="flex-1 max-w-7xl mx-auto w-full p-6 flex flex-col overflow-hidden">
+    <div class="flex-1 flex flex-col md:flex-row gap-6 overflow-hidden min-h-0 mb-4">
     <!-- Input Section -->
     <div class="w-full md:w-1/2 flex flex-col h-full">
       <div class="mb-2 flex justify-between items-baseline">
@@ -54,19 +55,33 @@
     <div class="w-full md:w-1/2 flex flex-col h-full overflow-hidden">
       <div class="mb-2 flex justify-between items-center pr-1 h-[21px]">
           <h2 class="text-sm font-semibold">Generated Jobs <span id="count" class="ml-1 inline-flex items-center justify-center bg-[#afb8c133] text-xs font-medium px-2 py-0.5 rounded-full">0</span></h2>
-          <div class="flex items-center gap-2">
+          <div class="flex items-center gap-2" title="Underspecified matrix configurations occur when you define include keys that are not present in the original matrix dimensions. In GitHub Actions, this can lead to unexpected behavior where the included job doesn't inherit the properties you expect, or don't run at all.">
               <input type="checkbox" id="check-underspecified" checked class="rounded border-gray-300 text-[#0969da] focus:ring-[#0969da] cursor-pointer">
-              <label for="check-underspecified" class="text-xs text-[#57606a] cursor-pointer select-none">Check underspecified</label>
+              <label for="check-underspecified" class="text-xs text-[#57606a] cursor-pointer select-none underline decoration-dotted decoration-gray-400 underline-offset-2">Check underspecified</label>
               <span id="underspecified-count-container" class="hidden">
                   <span id="underspecified-count" class="ml-1 inline-flex items-center justify-center bg-red-100 text-red-600 text-xs font-medium px-2 py-0.5 rounded-full">0</span>
               </span>
           </div>
       </div>
-      <div class="flex-1 overflow-auto pr-1">
+      <div class="flex-1 overflow-auto pr-1" id="output-container">
         <div id="output" class="space-y-3">
           <!-- Results will be injected here -->
         </div>
       </div>
+    </div>
+    </div>
+
+    <!-- Notification Banner -->
+    <div id="cli-notification" class="bg-blue-50 border border-blue-200 text-[#0969da] px-4 py-3 rounded-md text-sm flex items-center justify-between flex-none shadow-sm transition-all duration-500 ease-in-out overflow-hidden max-h-24 opacity-100">
+      <div class="flex items-center gap-3">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" class="w-4 h-4 flex-none">
+          <path d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8Zm8-5a.75.75 0 0 0-.75.75v4.5a.75.75 0 0 0 1.5 0v-4.5A.75.75 0 0 0 8 3Zm0 8.25a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5Z"/>
+        </svg>
+        <span>This tool is also available as CLI for use in CI/CD pipelines.</span>
+      </div>
+      <a href="https://github.com/katexochen/github-matrix-parser?tab=readme-ov-file#cli-usage" 
+         class="font-semibold underline hover:text-[#0a3069] whitespace-nowrap ml-4"
+         target="_blank" rel="noopener noreferrer">Learn more &rarr;</a>
     </div>
   </main>
 

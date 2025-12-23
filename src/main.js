@@ -9,6 +9,29 @@ const errorMessage = document.getElementById('error-message');
 const checkUnderspecified = document.getElementById('check-underspecified');
 const underspecifiedCountContainer = document.getElementById('underspecified-count-container');
 const underspecifiedCountSpan = document.getElementById('underspecified-count');
+const cliNotification = document.getElementById('cli-notification');
+const outputScrollContainer = document.getElementById('output-container');
+
+// Banner visibility logic
+function updateBannerVisibility() {
+    const inputScrollTop = yamlInput.scrollTop;
+    const outputScrollTop = outputScrollContainer ? outputScrollContainer.scrollTop : 0;
+    
+    // Hide if either is scrolled down
+    if (inputScrollTop > 0 || outputScrollTop > 0) {
+        cliNotification.classList.add('max-h-0', 'opacity-0', 'py-0', 'border-0', 'mt-0');
+        cliNotification.classList.remove('max-h-24', 'opacity-100', 'py-3', 'border');
+    } else {
+        cliNotification.classList.remove('max-h-0', 'opacity-0', 'py-0', 'border-0', 'mt-0');
+        cliNotification.classList.add('max-h-24', 'opacity-100', 'py-3', 'border');
+    }
+}
+
+// Attach scroll listeners
+yamlInput.addEventListener('scroll', updateBannerVisibility);
+if (outputScrollContainer) {
+    outputScrollContainer.addEventListener('scroll', updateBannerVisibility);
+}
 
 let currentJobResults = [];
 
