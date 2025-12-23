@@ -4,6 +4,8 @@ A simple tool to visualize GitHub Actions matrix combinations and debug complex 
 
 You can try it online: [https://katexochen.github.io/github-matrix-parser/](https://katexochen.github.io/github-matrix-parser/)
 
+Also checks for underspecified jobs in your matrix configurations, where some keys aren't defined for all jobs.
+
 ## Features
 
 - **visualize**: Paste your matrix YAML and see exactly what jobs GitHub will generate.
