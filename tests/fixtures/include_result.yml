@@ -1,17 +1,17 @@
-- fruit: apple
-  animal: cat
+- animal: cat
   color: pink
+  fruit: apple
   shape: circle
-- fruit: apple
-  animal: dog
-  color: green
-  shape: circle
-- fruit: pear
-  animal: cat
+- animal: cat
   color: pink
-- fruit: pear
-  animal: dog
+  fruit: pear
+- animal: cat
+  fruit: banana
+- animal: dog
   color: green
+  fruit: apple
+  shape: circle
+- animal: dog
+  color: green
+  fruit: pear
 - fruit: banana
-- fruit: banana
-  animal: cat

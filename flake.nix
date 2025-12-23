@@ -67,6 +67,7 @@
           buildInputs = with pkgs; [
             nodejs
             nodePackages.pnpm
+            gh
           ];
         };
       }

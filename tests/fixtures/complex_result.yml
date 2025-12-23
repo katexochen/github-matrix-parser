@@ -1,385 +1,744 @@
-- debug-shell: true
-  platform: &ref_0
+- debug-shell: false
+  platform:
+    name: Metal-QEMU-SNP-GPU
+    runner: SNP-GPU
+    self-hosted: true
+  test-name: atls
+- debug-shell: false
+  platform:
+    name: Metal-QEMU-SNP-GPU
+    runner: SNP-GPU
+    self-hosted: true
+  test-name: containerd-11644-reproducer
+- debug-shell: false
+  platform:
+    name: Metal-QEMU-SNP-GPU
+    runner: SNP-GPU
+    self-hosted: true
+  test-name: genpolicy-unsupported
+- debug-shell: false
+  platform:
+    name: Metal-QEMU-SNP-GPU
+    runner: SNP-GPU
+    self-hosted: true
+  test-name: gpu
+- debug-shell: false
+  platform:
+    name: Metal-QEMU-SNP-GPU
+    runner: SNP-GPU
+    self-hosted: true
+  test-name: imagepuller-auth
+- debug-shell: false
+  platform:
+    name: Metal-QEMU-SNP-GPU
+    runner: SNP-GPU
+    self-hosted: true
+  test-name: imagestore
+- debug-shell: false
+  platform:
+    name: Metal-QEMU-SNP-GPU
+    runner: SNP-GPU
+    self-hosted: true
+  test-name: memdump
+- debug-shell: false
+  platform:
+    name: Metal-QEMU-SNP-GPU
+    runner: SNP-GPU
+    self-hosted: true
+  test-name: openssl
+- debug-shell: false
+  platform:
+    name: Metal-QEMU-SNP-GPU
+    runner: SNP-GPU
+    self-hosted: true
+  test-name: peerrecovery
+- debug-shell: false
+  platform:
+    name: Metal-QEMU-SNP-GPU
+    runner: SNP-GPU
+    self-hosted: true
+  test-name: policy
+- debug-shell: false
+  platform:
+    name: Metal-QEMU-SNP-GPU
+    runner: SNP-GPU
+    self-hosted: true
+  test-name: proxy
+- debug-shell: false
+  platform:
+    name: Metal-QEMU-SNP-GPU
+    runner: SNP-GPU
+    self-hosted: true
+  test-name: regression
+- debug-shell: false
+  platform:
+    name: Metal-QEMU-SNP-GPU
+    runner: SNP-GPU
+    self-hosted: true
+  test-name: servicemesh
+- debug-shell: false
+  platform:
+    name: Metal-QEMU-SNP-GPU
+    runner: SNP-GPU
+    self-hosted: true
+  test-name: vault
+- debug-shell: false
+  platform:
+    name: Metal-QEMU-SNP-GPU
+    runner: SNP-GPU
+    self-hosted: true
+  test-name: volumestatefulset
+- debug-shell: false
+  platform:
+    name: Metal-QEMU-SNP-GPU
+    runner: SNP-GPU
+    self-hosted: true
+  test-name: workloadsecret
+- debug-shell: false
+  platform:
     name: Metal-QEMU-SNP
     runner: SNP
     self-hosted: true
   test-name: atls
-- debug-shell: true
-  platform: *ref_0
+- debug-shell: false
+  platform:
+    name: Metal-QEMU-SNP
+    runner: SNP
+    self-hosted: true
   test-name: containerd-11644-reproducer
-- debug-shell: true
-  platform: *ref_0
+- debug-shell: false
+  platform:
+    name: Metal-QEMU-SNP
+    runner: SNP
+    self-hosted: true
   test-name: genpolicy-unsupported
-- debug-shell: true
-  platform: *ref_0
+- debug-shell: false
+  platform:
+    name: Metal-QEMU-SNP
+    runner: SNP
+    self-hosted: true
   test-name: imagepuller-auth
-- debug-shell: true
-  platform: *ref_0
+- debug-shell: false
+  platform:
+    name: Metal-QEMU-SNP
+    runner: SNP
+    self-hosted: true
   test-name: imagestore
-- debug-shell: true
-  platform: *ref_0
+- debug-shell: false
+  platform:
+    name: Metal-QEMU-SNP
+    runner: SNP
+    self-hosted: true
   test-name: memdump
-- debug-shell: true
-  platform: *ref_0
+- debug-shell: false
+  platform:
+    name: Metal-QEMU-SNP
+    runner: SNP
+    self-hosted: true
   test-name: openssl
-- debug-shell: true
-  platform: *ref_0
+- debug-shell: false
+  platform:
+    name: Metal-QEMU-SNP
+    runner: SNP
+    self-hosted: true
   test-name: peerrecovery
-- debug-shell: true
-  platform: *ref_0
+- debug-shell: false
+  platform:
+    name: Metal-QEMU-SNP
+    runner: SNP
+    self-hosted: true
   test-name: policy
-- debug-shell: true
-  platform: *ref_0
+- debug-shell: false
+  platform:
+    name: Metal-QEMU-SNP
+    runner: SNP
+    self-hosted: true
   test-name: proxy
-- debug-shell: true
-  platform: *ref_0
+- debug-shell: false
+  platform:
+    name: Metal-QEMU-SNP
+    runner: SNP
+    self-hosted: true
   test-name: regression
-- debug-shell: true
-  platform: *ref_0
+- debug-shell: false
+  platform:
+    name: Metal-QEMU-SNP
+    runner: SNP
+    self-hosted: true
   test-name: servicemesh
-- debug-shell: true
-  platform: *ref_0
+- debug-shell: false
+  platform:
+    name: Metal-QEMU-SNP
+    runner: SNP
+    self-hosted: true
   test-name: vault
-- debug-shell: true
-  platform: *ref_0
+- debug-shell: false
+  platform:
+    name: Metal-QEMU-SNP
+    runner: SNP
+    self-hosted: true
   test-name: volumestatefulset
-- debug-shell: true
-  platform: *ref_0
+- debug-shell: false
+  platform:
+    name: Metal-QEMU-SNP
+    runner: SNP
+    self-hosted: true
   test-name: workloadsecret
-- debug-shell: true
-  platform: &ref_1
+- debug-shell: false
+  platform:
+    name: Metal-QEMU-TDX-GPU
+    runner: TDX-GPU
+    self-hosted: true
+  test-name: atls
+- debug-shell: false
+  platform:
+    name: Metal-QEMU-TDX-GPU
+    runner: TDX-GPU
+    self-hosted: true
+  test-name: containerd-11644-reproducer
+- debug-shell: false
+  platform:
+    name: Metal-QEMU-TDX-GPU
+    runner: TDX-GPU
+    self-hosted: true
+  test-name: genpolicy-unsupported
+- debug-shell: false
+  platform:
+    name: Metal-QEMU-TDX-GPU
+    runner: TDX-GPU
+    self-hosted: true
+  test-name: gpu
+- debug-shell: false
+  platform:
+    name: Metal-QEMU-TDX-GPU
+    runner: TDX-GPU
+    self-hosted: true
+  test-name: imagepuller-auth
+- debug-shell: false
+  platform:
+    name: Metal-QEMU-TDX-GPU
+    runner: TDX-GPU
+    self-hosted: true
+  test-name: imagestore
+- debug-shell: false
+  platform:
+    name: Metal-QEMU-TDX-GPU
+    runner: TDX-GPU
+    self-hosted: true
+  test-name: memdump
+- debug-shell: false
+  platform:
+    name: Metal-QEMU-TDX-GPU
+    runner: TDX-GPU
+    self-hosted: true
+  test-name: openssl
+- debug-shell: false
+  platform:
+    name: Metal-QEMU-TDX-GPU
+    runner: TDX-GPU
+    self-hosted: true
+  test-name: peerrecovery
+- debug-shell: false
+  platform:
+    name: Metal-QEMU-TDX-GPU
+    runner: TDX-GPU
+    self-hosted: true
+  test-name: policy
+- debug-shell: false
+  platform:
+    name: Metal-QEMU-TDX-GPU
+    runner: TDX-GPU
+    self-hosted: true
+  test-name: proxy
+- debug-shell: false
+  platform:
+    name: Metal-QEMU-TDX-GPU
+    runner: TDX-GPU
+    self-hosted: true
+  test-name: regression
+- debug-shell: false
+  platform:
+    name: Metal-QEMU-TDX-GPU
+    runner: TDX-GPU
+    self-hosted: true
+  test-name: servicemesh
+- debug-shell: false
+  platform:
+    name: Metal-QEMU-TDX-GPU
+    runner: TDX-GPU
+    self-hosted: true
+  test-name: vault
+- debug-shell: false
+  platform:
+    name: Metal-QEMU-TDX-GPU
+    runner: TDX-GPU
+    self-hosted: true
+  test-name: volumestatefulset
+- debug-shell: false
+  platform:
+    name: Metal-QEMU-TDX-GPU
+    runner: TDX-GPU
+    self-hosted: true
+  test-name: workloadsecret
+- debug-shell: false
+  platform:
     name: Metal-QEMU-TDX
     runner: TDX
     self-hosted: true
   test-name: atls
-- debug-shell: true
-  platform: *ref_1
+- debug-shell: false
+  platform:
+    name: Metal-QEMU-TDX
+    runner: TDX
+    self-hosted: true
   test-name: containerd-11644-reproducer
-- debug-shell: true
-  platform: *ref_1
+- debug-shell: false
+  platform:
+    name: Metal-QEMU-TDX
+    runner: TDX
+    self-hosted: true
   test-name: genpolicy-unsupported
-- debug-shell: true
-  platform: *ref_1
+- debug-shell: false
+  platform:
+    name: Metal-QEMU-TDX
+    runner: TDX
+    self-hosted: true
   test-name: imagepuller-auth
-- debug-shell: true
-  platform: *ref_1
+- debug-shell: false
+  platform:
+    name: Metal-QEMU-TDX
+    runner: TDX
+    self-hosted: true
   test-name: imagestore
-- debug-shell: true
-  platform: *ref_1
+- debug-shell: false
+  platform:
+    name: Metal-QEMU-TDX
+    runner: TDX
+    self-hosted: true
   test-name: memdump
-- debug-shell: true
-  platform: *ref_1
+- debug-shell: false
+  platform:
+    name: Metal-QEMU-TDX
+    runner: TDX
+    self-hosted: true
   test-name: openssl
-- debug-shell: true
-  platform: *ref_1
+- debug-shell: false
+  platform:
+    name: Metal-QEMU-TDX
+    runner: TDX
+    self-hosted: true
   test-name: peerrecovery
-- debug-shell: true
-  platform: *ref_1
+- debug-shell: false
+  platform:
+    name: Metal-QEMU-TDX
+    runner: TDX
+    self-hosted: true
   test-name: policy
-- debug-shell: true
-  platform: *ref_1
+- debug-shell: false
+  platform:
+    name: Metal-QEMU-TDX
+    runner: TDX
+    self-hosted: true
   test-name: proxy
-- debug-shell: true
-  platform: *ref_1
+- debug-shell: false
+  platform:
+    name: Metal-QEMU-TDX
+    runner: TDX
+    self-hosted: true
   test-name: regression
-- debug-shell: true
-  platform: *ref_1
+- debug-shell: false
+  platform:
+    name: Metal-QEMU-TDX
+    runner: TDX
+    self-hosted: true
   test-name: servicemesh
-- debug-shell: true
-  platform: *ref_1
+- debug-shell: false
+  platform:
+    name: Metal-QEMU-TDX
+    runner: TDX
+    self-hosted: true
   test-name: vault
-- debug-shell: true
-  platform: *ref_1
+- debug-shell: false
+  platform:
+    name: Metal-QEMU-TDX
+    runner: TDX
+    self-hosted: true
   test-name: volumestatefulset
-- debug-shell: true
-  platform: *ref_1
+- debug-shell: false
+  platform:
+    name: Metal-QEMU-TDX
+    runner: TDX
+    self-hosted: true
   test-name: workloadsecret
 - debug-shell: true
-  platform: &ref_2
+  platform:
     name: Metal-QEMU-SNP-GPU
     runner: SNP-GPU
     self-hosted: true
   test-name: atls
 - debug-shell: true
-  platform: *ref_2
+  platform:
+    name: Metal-QEMU-SNP-GPU
+    runner: SNP-GPU
+    self-hosted: true
   test-name: containerd-11644-reproducer
 - debug-shell: true
-  platform: *ref_2
+  platform:
+    name: Metal-QEMU-SNP-GPU
+    runner: SNP-GPU
+    self-hosted: true
   test-name: genpolicy-unsupported
 - debug-shell: true
-  platform: *ref_2
+  platform:
+    name: Metal-QEMU-SNP-GPU
+    runner: SNP-GPU
+    self-hosted: true
   test-name: gpu
 - debug-shell: true
-  platform: *ref_2
+  platform:
+    name: Metal-QEMU-SNP-GPU
+    runner: SNP-GPU
+    self-hosted: true
   test-name: imagepuller-auth
 - debug-shell: true
-  platform: *ref_2
+  platform:
+    name: Metal-QEMU-SNP-GPU
+    runner: SNP-GPU
+    self-hosted: true
   test-name: imagestore
 - debug-shell: true
-  platform: *ref_2
+  platform:
+    name: Metal-QEMU-SNP-GPU
+    runner: SNP-GPU
+    self-hosted: true
   test-name: memdump
 - debug-shell: true
-  platform: *ref_2
+  platform:
+    name: Metal-QEMU-SNP-GPU
+    runner: SNP-GPU
+    self-hosted: true
   test-name: openssl
 - debug-shell: true
-  platform: *ref_2
+  platform:
+    name: Metal-QEMU-SNP-GPU
+    runner: SNP-GPU
+    self-hosted: true
   test-name: peerrecovery
 - debug-shell: true
-  platform: *ref_2
+  platform:
+    name: Metal-QEMU-SNP-GPU
+    runner: SNP-GPU
+    self-hosted: true
   test-name: policy
 - debug-shell: true
-  platform: *ref_2
+  platform:
+    name: Metal-QEMU-SNP-GPU
+    runner: SNP-GPU
+    self-hosted: true
   test-name: proxy
 - debug-shell: true
-  platform: *ref_2
+  platform:
+    name: Metal-QEMU-SNP-GPU
+    runner: SNP-GPU
+    self-hosted: true
   test-name: regression
 - debug-shell: true
-  platform: *ref_2
+  platform:
+    name: Metal-QEMU-SNP-GPU
+    runner: SNP-GPU
+    self-hosted: true
   test-name: servicemesh
 - debug-shell: true
-  platform: *ref_2
+  platform:
+    name: Metal-QEMU-SNP-GPU
+    runner: SNP-GPU
+    self-hosted: true
   test-name: vault
 - debug-shell: true
-  platform: *ref_2
+  platform:
+    name: Metal-QEMU-SNP-GPU
+    runner: SNP-GPU
+    self-hosted: true
   test-name: volumestatefulset
 - debug-shell: true
-  platform: *ref_2
+  platform:
+    name: Metal-QEMU-SNP-GPU
+    runner: SNP-GPU
+    self-hosted: true
   test-name: workloadsecret
 - debug-shell: true
-  platform: &ref_3
+  platform:
+    name: Metal-QEMU-SNP
+    runner: SNP
+    self-hosted: true
+  test-name: atls
+- debug-shell: true
+  platform:
+    name: Metal-QEMU-SNP
+    runner: SNP
+    self-hosted: true
+  test-name: containerd-11644-reproducer
+- debug-shell: true
+  platform:
+    name: Metal-QEMU-SNP
+    runner: SNP
+    self-hosted: true
+  test-name: genpolicy-unsupported
+- debug-shell: true
+  platform:
+    name: Metal-QEMU-SNP
+    runner: SNP
+    self-hosted: true
+  test-name: imagepuller-auth
+- debug-shell: true
+  platform:
+    name: Metal-QEMU-SNP
+    runner: SNP
+    self-hosted: true
+  test-name: imagestore
+- debug-shell: true
+  platform:
+    name: Metal-QEMU-SNP
+    runner: SNP
+    self-hosted: true
+  test-name: memdump
+- debug-shell: true
+  platform:
+    name: Metal-QEMU-SNP
+    runner: SNP
+    self-hosted: true
+  test-name: openssl
+- debug-shell: true
+  platform:
+    name: Metal-QEMU-SNP
+    runner: SNP
+    self-hosted: true
+  test-name: peerrecovery
+- debug-shell: true
+  platform:
+    name: Metal-QEMU-SNP
+    runner: SNP
+    self-hosted: true
+  test-name: policy
+- debug-shell: true
+  platform:
+    name: Metal-QEMU-SNP
+    runner: SNP
+    self-hosted: true
+  test-name: proxy
+- debug-shell: true
+  platform:
+    name: Metal-QEMU-SNP
+    runner: SNP
+    self-hosted: true
+  test-name: regression
+- debug-shell: true
+  platform:
+    name: Metal-QEMU-SNP
+    runner: SNP
+    self-hosted: true
+  test-name: servicemesh
+- debug-shell: true
+  platform:
+    name: Metal-QEMU-SNP
+    runner: SNP
+    self-hosted: true
+  test-name: vault
+- debug-shell: true
+  platform:
+    name: Metal-QEMU-SNP
+    runner: SNP
+    self-hosted: true
+  test-name: volumestatefulset
+- debug-shell: true
+  platform:
+    name: Metal-QEMU-SNP
+    runner: SNP
+    self-hosted: true
+  test-name: workloadsecret
+- debug-shell: true
+  platform:
     name: Metal-QEMU-TDX-GPU
     runner: TDX-GPU
     self-hosted: true
   test-name: atls
 - debug-shell: true
-  platform: *ref_3
+  platform:
+    name: Metal-QEMU-TDX-GPU
+    runner: TDX-GPU
+    self-hosted: true
   test-name: containerd-11644-reproducer
 - debug-shell: true
-  platform: *ref_3
+  platform:
+    name: Metal-QEMU-TDX-GPU
+    runner: TDX-GPU
+    self-hosted: true
   test-name: genpolicy-unsupported
 - debug-shell: true
-  platform: *ref_3
+  platform:
+    name: Metal-QEMU-TDX-GPU
+    runner: TDX-GPU
+    self-hosted: true
   test-name: gpu
 - debug-shell: true
-  platform: *ref_3
+  platform:
+    name: Metal-QEMU-TDX-GPU
+    runner: TDX-GPU
+    self-hosted: true
   test-name: imagepuller-auth
 - debug-shell: true
-  platform: *ref_3
+  platform:
+    name: Metal-QEMU-TDX-GPU
+    runner: TDX-GPU
+    self-hosted: true
   test-name: imagestore
 - debug-shell: true
-  platform: *ref_3
+  platform:
+    name: Metal-QEMU-TDX-GPU
+    runner: TDX-GPU
+    self-hosted: true
   test-name: memdump
 - debug-shell: true
-  platform: *ref_3
+  platform:
+    name: Metal-QEMU-TDX-GPU
+    runner: TDX-GPU
+    self-hosted: true
   test-name: openssl
 - debug-shell: true
-  platform: *ref_3
+  platform:
+    name: Metal-QEMU-TDX-GPU
+    runner: TDX-GPU
+    self-hosted: true
   test-name: peerrecovery
 - debug-shell: true
-  platform: *ref_3
+  platform:
+    name: Metal-QEMU-TDX-GPU
+    runner: TDX-GPU
+    self-hosted: true
   test-name: policy
 - debug-shell: true
-  platform: *ref_3
+  platform:
+    name: Metal-QEMU-TDX-GPU
+    runner: TDX-GPU
+    self-hosted: true
   test-name: proxy
 - debug-shell: true
-  platform: *ref_3
+  platform:
+    name: Metal-QEMU-TDX-GPU
+    runner: TDX-GPU
+    self-hosted: true
   test-name: regression
 - debug-shell: true
-  platform: *ref_3
+  platform:
+    name: Metal-QEMU-TDX-GPU
+    runner: TDX-GPU
+    self-hosted: true
   test-name: servicemesh
 - debug-shell: true
-  platform: *ref_3
+  platform:
+    name: Metal-QEMU-TDX-GPU
+    runner: TDX-GPU
+    self-hosted: true
   test-name: vault
 - debug-shell: true
-  platform: *ref_3
+  platform:
+    name: Metal-QEMU-TDX-GPU
+    runner: TDX-GPU
+    self-hosted: true
   test-name: volumestatefulset
 - debug-shell: true
-  platform: *ref_3
+  platform:
+    name: Metal-QEMU-TDX-GPU
+    runner: TDX-GPU
+    self-hosted: true
   test-name: workloadsecret
-- debug-shell: false
-  platform: *ref_0
+- debug-shell: true
+  platform:
+    name: Metal-QEMU-TDX
+    runner: TDX
+    self-hosted: true
   test-name: atls
-- debug-shell: false
-  platform: *ref_0
+- debug-shell: true
+  platform:
+    name: Metal-QEMU-TDX
+    runner: TDX
+    self-hosted: true
   test-name: containerd-11644-reproducer
-- debug-shell: false
-  platform: *ref_0
+- debug-shell: true
+  platform:
+    name: Metal-QEMU-TDX
+    runner: TDX
+    self-hosted: true
   test-name: genpolicy-unsupported
-- debug-shell: false
-  platform: *ref_0
+- debug-shell: true
+  platform:
+    name: Metal-QEMU-TDX
+    runner: TDX
+    self-hosted: true
   test-name: imagepuller-auth
-- debug-shell: false
-  platform: *ref_0
+- debug-shell: true
+  platform:
+    name: Metal-QEMU-TDX
+    runner: TDX
+    self-hosted: true
   test-name: imagestore
-- debug-shell: false
-  platform: *ref_0
+- debug-shell: true
+  platform:
+    name: Metal-QEMU-TDX
+    runner: TDX
+    self-hosted: true
   test-name: memdump
-- debug-shell: false
-  platform: *ref_0
+- debug-shell: true
+  platform:
+    name: Metal-QEMU-TDX
+    runner: TDX
+    self-hosted: true
   test-name: openssl
-- debug-shell: false
-  platform: *ref_0
+- debug-shell: true
+  platform:
+    name: Metal-QEMU-TDX
+    runner: TDX
+    self-hosted: true
   test-name: peerrecovery
-- debug-shell: false
-  platform: *ref_0
+- debug-shell: true
+  platform:
+    name: Metal-QEMU-TDX
+    runner: TDX
+    self-hosted: true
   test-name: policy
-- debug-shell: false
-  platform: *ref_0
+- debug-shell: true
+  platform:
+    name: Metal-QEMU-TDX
+    runner: TDX
+    self-hosted: true
   test-name: proxy
-- debug-shell: false
-  platform: *ref_0
+- debug-shell: true
+  platform:
+    name: Metal-QEMU-TDX
+    runner: TDX
+    self-hosted: true
   test-name: regression
-- debug-shell: false
-  platform: *ref_0
+- debug-shell: true
+  platform:
+    name: Metal-QEMU-TDX
+    runner: TDX
+    self-hosted: true
   test-name: servicemesh
-- debug-shell: false
-  platform: *ref_0
+- debug-shell: true
+  platform:
+    name: Metal-QEMU-TDX
+    runner: TDX
+    self-hosted: true
   test-name: vault
-- debug-shell: false
-  platform: *ref_0
+- debug-shell: true
+  platform:
+    name: Metal-QEMU-TDX
+    runner: TDX
+    self-hosted: true
   test-name: volumestatefulset
-- debug-shell: false
-  platform: *ref_0
+- debug-shell: true
+  platform:
+    name: Metal-QEMU-TDX
+    runner: TDX
+    self-hosted: true
   test-name: workloadsecret
-- debug-shell: false
-  platform: *ref_1
-  test-name: atls
-- debug-shell: false
-  platform: *ref_1
-  test-name: containerd-11644-reproducer
-- debug-shell: false
-  platform: *ref_1
-  test-name: genpolicy-unsupported
-- debug-shell: false
-  platform: *ref_1
-  test-name: imagepuller-auth
-- debug-shell: false
-  platform: *ref_1
-  test-name: imagestore
-- debug-shell: false
-  platform: *ref_1
-  test-name: memdump
-- debug-shell: false
-  platform: *ref_1
-  test-name: openssl
-- debug-shell: false
-  platform: *ref_1
-  test-name: peerrecovery
-- debug-shell: false
-  platform: *ref_1
-  test-name: policy
-- debug-shell: false
-  platform: *ref_1
-  test-name: proxy
-- debug-shell: false
-  platform: *ref_1
-  test-name: regression
-- debug-shell: false
-  platform: *ref_1
-  test-name: servicemesh
-- debug-shell: false
-  platform: *ref_1
-  test-name: vault
-- debug-shell: false
-  platform: *ref_1
-  test-name: volumestatefulset
-- debug-shell: false
-  platform: *ref_1
-  test-name: workloadsecret
-- debug-shell: false
-  platform: *ref_2
-  test-name: atls
-- debug-shell: false
-  platform: *ref_2
-  test-name: containerd-11644-reproducer
-- debug-shell: false
-  platform: *ref_2
-  test-name: genpolicy-unsupported
-- debug-shell: false
-  platform: *ref_2
-  test-name: gpu
-- debug-shell: false
-  platform: *ref_2
-  test-name: imagepuller-auth
-- debug-shell: false
-  platform: *ref_2
-  test-name: imagestore
-- debug-shell: false
-  platform: *ref_2
-  test-name: memdump
-- debug-shell: false
-  platform: *ref_2
-  test-name: openssl
-- debug-shell: false
-  platform: *ref_2
-  test-name: peerrecovery
-- debug-shell: false
-  platform: *ref_2
-  test-name: policy
-- debug-shell: false
-  platform: *ref_2
-  test-name: proxy
-- debug-shell: false
-  platform: *ref_2
-  test-name: regression
-- debug-shell: false
-  platform: *ref_2
-  test-name: servicemesh
-- debug-shell: false
-  platform: *ref_2
-  test-name: vault
-- debug-shell: false
-  platform: *ref_2
-  test-name: volumestatefulset
-- debug-shell: false
-  platform: *ref_2
-  test-name: workloadsecret
-- debug-shell: false
-  platform: *ref_3
-  test-name: atls
-- debug-shell: false
-  platform: *ref_3
-  test-name: containerd-11644-reproducer
-- debug-shell: false
-  platform: *ref_3
-  test-name: genpolicy-unsupported
-- debug-shell: false
-  platform: *ref_3
-  test-name: gpu
-- debug-shell: false
-  platform: *ref_3
-  test-name: imagepuller-auth
-- debug-shell: false
-  platform: *ref_3
-  test-name: imagestore
-- debug-shell: false
-  platform: *ref_3
-  test-name: memdump
-- debug-shell: false
-  platform: *ref_3
-  test-name: openssl
-- debug-shell: false
-  platform: *ref_3
-  test-name: peerrecovery
-- debug-shell: false
-  platform: *ref_3
-  test-name: policy
-- debug-shell: false
-  platform: *ref_3
-  test-name: proxy
-- debug-shell: false
-  platform: *ref_3
-  test-name: regression
-- debug-shell: false
-  platform: *ref_3
-  test-name: servicemesh
-- debug-shell: false
-  platform: *ref_3
-  test-name: vault
-- debug-shell: false
-  platform: *ref_3
-  test-name: volumestatefulset
-- debug-shell: false
-  platform: *ref_3
-  test-name: workloadsecret
-

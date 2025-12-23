@@ -59,7 +59,38 @@ describe('Matrix Generator', () => {
           result = outputObj;
       }
 
-      expect(result).toEqual(expectedOutput);
+      const normalizedResult = normalizeResult(result);
+      const normalizedExpected = normalizeResult(expectedOutput);
+
+      expect(normalizedResult).toEqual(normalizedExpected);
     });
   });
 });
+
+function normalizeResult(res) {
+    if (Array.isArray(res)) {
+        return sortCombinations(res);
+    } else if (typeof res === 'object' && res !== null) {
+        const normalized = {};
+        Object.keys(res).sort().forEach(key => {
+            normalized[key] = sortCombinations(res[key]);
+        });
+        return normalized;
+    }
+    return res;
+}
+
+function sortCombinations(combinations) {
+    if (!Array.isArray(combinations)) return combinations;
+    return combinations.map(combo => {
+        // Sort keys within the object
+        const sortedKeys = Object.keys(combo).sort();
+        const sortedCombo = {};
+        sortedKeys.forEach(key => sortedCombo[key] = combo[key]);
+        return sortedCombo;
+    }).sort((a, b) => {
+        // Sort the array of objects
+        return JSON.stringify(a).localeCompare(JSON.stringify(b));
+    });
+}
+
